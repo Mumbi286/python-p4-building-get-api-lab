@@ -13,7 +13,7 @@ app.json.compact = False
 migrate = Migrate(app, db)
 db.init_app(app)
 
-# 🔑 THIS WAS MISSING
+
 with app.app_context():
     db.create_all()
 
@@ -31,7 +31,7 @@ def bakeries():
 
 @app.route('/bakeries/<int:id>')
 def bakery_by_id(id):
-    bakery = Bakery.query.get_or_404(id)
+    bakery = Bakery.query.session.get(Bakery, id)
     return jsonify(bakery.to_dict())
 
 
